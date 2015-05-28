@@ -1,11 +1,25 @@
 var global = window || GLOBAL;
 
 global.bruhdash = {
-  chunk: function(){
+  chunk: function(inArray,chunkSize){
+    var chunkedArray = [];
 
+    while(inArray.length > 0) {
+
+      chunkedArray.push(inArray.splice(0,chunkSize));
+    }
+
+    return chunkedArray;
   },
 
-  compact: function() {
+  compact: function(array) {
+
+    var isTruthy = function(value) {
+
+      return Boolean(value);
+    };
+
+    return array.filter(isTruthy);
 
   },
 
@@ -26,7 +40,7 @@ global.bruhdash = {
   },
 
   first: function () {
-      
+
   },
 
   indexOf: function () {
