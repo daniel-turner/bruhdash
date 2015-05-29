@@ -3,7 +3,7 @@ var global = window || GLOBAL;
 global.bruhdash = {
   chunk: function(inArray, chunkSize){
 
-    if(chunkSize === undefined) {
+    if(chunkSize === undefined){
 
       chunkSize = 1;
     };
@@ -216,6 +216,8 @@ global.bruhdash = {
 //rework values
   pull: function (inArray) {
 
+    var args;
+
     if(!this.validArray(inArray)) {
 
       return undefined;
@@ -232,31 +234,39 @@ global.bruhdash = {
       return inArray;
     };
 
-    // var isPartOf = function(value) {
-
-    //   if(values.indexOf(value) >= 0) {
-
-    //     return false;
-    //   }
-
-    //   return true;
-
-    // };
-
-    // inArray = inArray.filter(isPartOf);
-
     return this.difference(inArray,args);
 
   },
 //rework indices
   pullAt: function (inArray,indices) {
 
+    var args;
+
+    if(!this.validArray(inArray)) {
+
+      return undefined;
+    };
+
+    if(arguments.length > 1) {
+
+      var argsCopy = Array.prototype.slice.call(arguments);
+
+      args = argsCopy.slice(1);
+
+    } else {
+
+      return inArray;
+    };
+
     var count = 0;
 
-    for(var i=0;i<indices.length;i++) {
+    for(var i=0;i<args.length;i++) {
 
-      inArray.splice((indices[i]-count),1);
-      count++;
+      if(args[i]>=0) {
+
+        inArray.splice((args[i]-count),1);
+        count++;
+      };
     }
 
     return inArray;
