@@ -1,14 +1,14 @@
 var global = window || GLOBAL;
 
 global.bruhdash = {
-  chunk: function(inArray, chunkSize){
+  chunk : function(inArray, chunkSize) {
 
-    if(chunkSize === undefined){
+    if ( chunkSize === undefined) {
 
       chunkSize = 1;
-    };
+    } ;
 
-    if(!validArray(inArray)) {
+    if(!this.validArray(inArray)) {
 
       return undefined;
     };
@@ -25,7 +25,7 @@ global.bruhdash = {
 
   compact: function(inArray) {
 
-    if(!validArray(inArray)) {
+    if(!this.validArray(inArray)) {
 
       return undefined;
     };
@@ -38,7 +38,7 @@ global.bruhdash = {
     return inArray.filter(isTruthy);
 
   },
-//rework filteredArray
+  // rework filteredArray
   difference: function(inArray) {
 
     if(!this.validArray(inArray)) {
@@ -119,6 +119,13 @@ global.bruhdash = {
 
       number = 1;
     };
+
+    var index = inArray.length - number;
+
+    if(index < 0) {
+
+      return [];
+    }
 
     inArray.splice((inArray.length - number));
 
@@ -208,7 +215,27 @@ global.bruhdash = {
 
   },
 
-  lastIndexof: function (inArray, value, index) {
+  lastIndexOf: function (inArray, value, index) {
+
+    if(!this.validArray(inArray)) {
+
+      return undefined;
+    };
+
+    if(!typeof value === "number") {
+
+      return undefined;
+    };
+
+    if(index === undefined) {
+
+      index = inArray.length-1;
+    };
+
+    if(!typeof index === "number") {
+
+      return undefined;
+    };
 
     return inArray.lastIndexOf(value,index);
 
@@ -238,7 +265,7 @@ global.bruhdash = {
 
   },
 //rework indices
-  pullAt: function (inArray,indices) {
+  pullAt: function (inArray) {
 
     var args;
 
@@ -255,25 +282,34 @@ global.bruhdash = {
 
     } else {
 
-      return inArray;
+      return [];
     };
 
     var count = 0;
+
+    var outArray = [];
 
     for(var i=0;i<args.length;i++) {
 
       if(args[i]>=0) {
 
-        inArray.splice((args[i]-count),1);
+        var outItem = inArray.splice((args[i]-count),1);
+
+        outArray.push(outItem[0]);
         count++;
       };
     }
 
-    return inArray;
+    return outArray;
 
   },
 
   rest: function (inArray) {
+
+    if(!this.validArray(inArray)) {
+
+      return undefined;
+    };
 
     inArray.shift();
 
@@ -283,13 +319,33 @@ global.bruhdash = {
 
   slice: function (inArray,start,end) {
 
+    if(!this.validArray(inArray)) {
+
+      return undefined;
+    };
+
+    if(!Boolean(start)) {
+
+      start = 0;
+    };
+
+    if(!Boolean(end)) {
+
+      end = inArray.length;
+    };
+
     return inArray.slice(start,end);
 
   },
 
   take: function (inArray,number) {
 
-    if(number===undefined) {
+    if(!this.validArray(inArray)) {
+
+      return undefined;
+    };
+
+    if(!Boolean(number)) {
 
       number = 1;
     };
@@ -300,9 +356,19 @@ global.bruhdash = {
 
   takeRight: function (inArray,number) {
 
-    if(number===undefined) {
+    if(!this.validArray(inArray)) {
+
+      return undefined;
+    };
+
+    if(!Boolean(number)) {
 
       number = 1;
+    };
+
+    if (inArray.length - number < 0) {
+
+      return inArray;
     };
 
     return inArray.slice((inArray.length-number));
@@ -310,6 +376,11 @@ global.bruhdash = {
   },
 //rework args
   zip: function (inArray) {
+
+    if(!this.validArray(inArray)) {
+
+      return undefined;
+    };
 
     var outArrays = [];
     var argsCopy = Array.prototype.slice.call(arguments);
@@ -341,6 +412,11 @@ global.bruhdash = {
 
   unzip: function (inArray) {
 
+    if(!this.validArray(inArray)) {
+
+      return undefined;
+    };
+
     var outArray = [];
     var argsCopy = Array.prototype.slice.call(arguments);
 
@@ -370,6 +446,12 @@ global.bruhdash = {
   },
 //rework args
   without: function(inArray) {
+
+    if(!this.validArray(inArray)) {
+
+      return undefined;
+    };
+
 
     var args;
 
